@@ -1,0 +1,28 @@
+@import "~bootswatch/dist/superhero/variables";
+
+.appFrameBar {
+  background-color: $gray-800;
+  display: grid;
+  grid-template-columns: auto 30px 30px;
+  user-select: none;
+  height: 34px;
+
+  span {
+    -webkit-app-region: drag;
+  }
+
+  i:first-of-type {
+    &:hover {
+      background-color: $gray-700;
+      cursor: pointer;
+    }
+  }
+
+  i:last-of-type {
+    &:hover {
+      background-color: $red;
+      cursor: pointer;
+    }
+  }
+
+}

@@ -1,0 +1,24 @@
+<div class="wrapper">
+    <div class="card ml-5">
+        <h3 class="card-header">Login</h3>
+
+        <div class="card-body">
+            <form [formGroup]="loginForm" (submit)="loginFormSubmit()">
+                <div class="form-group">
+                    <label for="clientID">Client ID</label>
+                    <input id="clientID" class="form-control" type="text" name="clientID" formControlName="clientID">
+                </div>
+                <div class="form-group">
+                    <label for="token">Token</label>
+                    <input id="token" class="form-control" [class.is-invalid]="loginFormSubmitted && loginForm.controls.token.errors" type="text" name="token" formControlName="token">
+                    <div class="invalid-feedback d-block" *ngIf="loginFormSubmitted && loginForm.controls.token.errors">
+                        <span *ngIf="loginForm.controls.token.errors.required">Please type in a Token!</span>
+                        <span *ngIf="loginForm.controls.token.errors.invalid">Token is invalid!</span>
+                    </div>
+                    <button class="btn btn-primary float-right mt-2">Login</button>
+                </div>
+                <a href="#" class="text-info mt-2" *ngIf="clientIDHasValue()" (click)="openBotAuthSite()">Add Bot to Server</a>
+            </form>
+        </div>
+    </div>
+</div>

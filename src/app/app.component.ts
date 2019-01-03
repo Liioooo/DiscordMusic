@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {ElectronService} from 'ngx-electron';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  constructor() {}
+  constructor(private electronService: ElectronService) {}
+
+  minimize() {
+      this.electronService.remote.getCurrentWindow().minimize();
+  }
+
+  close() {
+      this.electronService.remote.getCurrentWindow().close();
+  }
 }

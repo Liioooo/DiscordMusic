@@ -1,1 +1,27 @@
+@import "~bootswatch/dist/superhero/variables";
 
+.wrapper {
+  height: calc(100% - 34px);
+  display: grid;
+  grid-template-columns: 200px auto;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $gray-300;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $gray-500;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: $gray-800;
+  }
+
+  div {
+    overflow: auto;
+  }
+}

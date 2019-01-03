@@ -1,0 +1,17 @@
+@import "../../../mixins";
+@import "~bootswatch/dist/superhero/variables";
+@import "../../../varibaleOverrides";
+.wrapper {
+  height: calc(100% - 34px);
+  background-color: $gray-300;
+
+  .card {
+    width: 700px;
+    position: relative;
+    top: 20%;
+
+    @include mediaQuery(780px, max) {
+      width: 85%;
+    }
+  }
+}

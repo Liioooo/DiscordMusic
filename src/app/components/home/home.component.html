@@ -1,3 +1,8 @@
-<div class="m-5">
-  <button class="btn-primary btn">test</button>
+<div class="wrapper">
+  <div class="bg-dark">
+    <app-channel *ngFor="let channel of channels"
+                 [channel]="channel"
+                 (clickedOnChannel)="joinChannel($event)">
+    </app-channel>
+  </div>
 </div>
