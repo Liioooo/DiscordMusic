@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.channels = this.discordService.getChannels();
-    console.log(this.channels);
   }
 
   public joinChannel(channel: Channel) {

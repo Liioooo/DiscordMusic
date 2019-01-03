@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Discord from 'discord.js';
-import {Channel, Client, Snowflake, VoiceChannel} from 'discord.js';
+import {Channel, Client, VoiceChannel} from 'discord.js';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,7 @@ export class DiscordService {
   }
 
   public joinChannel(channel: Channel) {
+      console.log(typeof window);
       const voiceChannel = channel as VoiceChannel;
       voiceChannel.join();
   }
