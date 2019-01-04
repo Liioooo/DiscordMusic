@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {VoiceChannel} from 'discord.js';
+import {Snowflake, VoiceChannel} from 'discord.js';
 import {ElectronService} from 'ngx-electron';
 import {IPCResponse} from '../models/IPCResponse';
 
@@ -17,15 +17,11 @@ export class DiscordService {
       });
   }
 
-  public getChannels(): Promise<Array<VoiceChannel>> {
-      return new Promise<Array<VoiceChannel>>(resolve => {
-          this.sendIPC('getChannels', {}).then((data) => {
-              resolve(data);
-          });
-      });
+  public async getChannels(): Promise<Array<VoiceChannel>> {
+      return await this.sendIPC('getChannels', {});
   }
 
-  public joinChannel(channel: VoiceChannel): Promise<any> {
+  public joinChannel(channel: VoiceChannel): Promise<Snowflake> {
       return this.sendIPC('joinChannel', {
           channel: channel
       });

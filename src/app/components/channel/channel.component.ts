@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Channel} from 'discord.js';
+import {Channel, Snowflake} from 'discord.js';
 
 @Component({
   selector: 'app-channel',
@@ -8,19 +8,22 @@ import {Channel} from 'discord.js';
 })
 export class ChannelComponent implements OnInit {
 
-  @Input()
-  public channel: Channel;
+    @Input()
+    public channel: Channel;
 
-  @Output()
-  public clickedOnChannel = new EventEmitter<Channel>();
+    @Input()
+    public channelCurrentlyActive: boolean;
 
-  constructor() { }
+    @Output()
+    public clickedOnChannel = new EventEmitter<Channel>();
 
-  ngOnInit() {
-  }
+    constructor() { }
 
-  public handleClick() {
-    this.clickedOnChannel.emit(this.channel);
-  }
+    ngOnInit() {
+    }
+
+    public handleClick() {
+      this.clickedOnChannel.emit(this.channel);
+    }
 
 }

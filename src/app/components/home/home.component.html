@@ -1,8 +1,16 @@
 <div class="wrapper">
-  <div class="bg-dark">
-    <app-channel *ngFor="let channel of (channels | async)"
-                 [channel]="channel"
-                 (clickedOnChannel)="joinChannel(channel)">
-    </app-channel>
+  <div class="bg-dark channels">
+    <div class="alert alert-warning m-0 sticky-top" role="alert" *ngIf="showingJoinError">
+      {{joinError}}
+    </div>
+    <div>
+      <app-channel *ngFor="let channel of (channels | async)"
+                   [channel]="channel"
+                   [channelCurrentlyActive]="currentChannel === channel.id"
+                   (clickedOnChannel)="joinChannel(channel)">
+      </app-channel>
+    </div>
+  </div>
+  <div class="main-content">
   </div>
 </div>

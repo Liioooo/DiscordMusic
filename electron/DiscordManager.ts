@@ -1,7 +1,6 @@
 import * as Discord from 'discord.js';
-import {Channel, Client, VoiceChannel, VoiceConnection} from 'discord.js';
+import {Channel, Client, Snowflake, VoiceChannel, VoiceConnection} from 'discord.js';
 import { ipcMain, WebContents } from 'electron';
-import {reject} from 'q';
 
 export class DiscordManager {
 
@@ -38,23 +37,18 @@ export class DiscordManager {
     }
 
     private getChannels(): Promise<any> {
-        return new Promise<any>(resolve => {
-            const channels = this.client.channels
-                .map((value: Channel) => value)
-                .filter((channel: Channel) => channel.type === 'voice')
-                .map(channel => channel as VoiceChannel);
-            resolve(channels);
-        });
+        return Promise.resolve(
+            this.client.channels
+            .map((value: Channel) => value)
+            .filter((channel: Channel) => channel.type === 'voice')
+            .map(channel => channel as VoiceChannel)
+        );
     }
 
-    private joinChannel(channel: VoiceChannel): Promise<any> {
-        return new Promise<any>(resolve => {
+    private async joinChannel(channel: VoiceChannel): Promise<Snowflake> {
             const vc = this.client.channels.get(channel.id) as VoiceChannel;
-            vc.join().then((con: VoiceConnection) => {
-                this.voiceConnection = con;
-                resolve();
-            }).catch(err => reject(err));
-        });
+            this.voiceConnection = await vc.join();
+            return vc.id;
     }
 
 }
