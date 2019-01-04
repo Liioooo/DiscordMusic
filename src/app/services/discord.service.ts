@@ -1,30 +1,46 @@
 import { Injectable } from '@angular/core';
-import * as Discord from 'discord.js';
-import {Channel, Client, VoiceChannel} from 'discord.js';
+import {VoiceChannel} from 'discord.js';
+import {ElectronService} from 'ngx-electron';
+import {IPCResponse} from '../models/IPCResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DiscordService {
 
-  private client: Client;
 
-  constructor() {}
+  constructor(private electronService: ElectronService) {}
 
   public login(token: string): Promise<string> {
-      this.client = new Discord.Client();
-      return this.client.login(token);
+      return this.sendIPC('login', {
+            token: token
+      });
   }
 
-  public getChannels(): Array<Channel> {
-      return this.client.channels
-          .map((value: Channel) => value)
-          .filter((channel: Channel) => channel.type === 'voice');
+  public getChannels(): Promise<Array<VoiceChannel>> {
+      return new Promise<Array<VoiceChannel>>(resolve => {
+          this.sendIPC('getChannels', {}).then((data) => {
+              resolve(data);
+          });
+      });
   }
 
-  public joinChannel(channel: Channel) {
-      console.log(typeof window);
-      const voiceChannel = channel as VoiceChannel;
-      voiceChannel.join();
+  public joinChannel(channel: VoiceChannel): Promise<any> {
+      return this.sendIPC('joinChannel', {
+          channel: channel
+      });
+  }
+
+  private sendIPC(command: string, data: any): Promise<any> {
+      return new Promise<any>((resolve, reject) => {
+          this.electronService.ipcRenderer.send(command, data);
+          this.electronService.ipcRenderer.once(`${command}Response`, (event, dataResponse: IPCResponse) => {
+              if (dataResponse.result === 'res') {
+                  resolve(dataResponse.data);
+              } else {
+                  reject(dataResponse.data);
+              }
+          });
+      });
   }
 }

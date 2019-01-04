@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
         const token = this.loginForm.controls.token.value;
         this.discordService.login(token).then(() => {
             this.router.navigate(['/home']);
-            this.discordService.getChannels();
         }).catch(() => {
             this.loginForm.controls.token.setErrors({invalid: true});
         });

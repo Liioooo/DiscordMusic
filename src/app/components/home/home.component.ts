@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DiscordService} from '../../services/discord.service';
-import {Channel} from 'discord.js';
+import { VoiceChannel} from 'discord.js';
+import {from, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +10,16 @@ import {Channel} from 'discord.js';
 })
 export class HomeComponent implements OnInit {
 
-  public channels: Array<Channel>;
+  public channels: Observable<Array<VoiceChannel>>;
 
   constructor(private discordService: DiscordService) { }
 
   ngOnInit() {
-    this.channels = this.discordService.getChannels();
+    this.channels = from(this.discordService.getChannels());
   }
 
-  public joinChannel(channel: Channel) {
-    this.discordService.joinChannel(channel);
+  public joinChannel(channel: VoiceChannel) {
+    this.discordService.joinChannel(channel).catch(err => console.log('can not join!'));
   }
 
 }

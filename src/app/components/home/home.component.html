@@ -1,8 +1,8 @@
 <div class="wrapper">
   <div class="bg-dark">
-    <app-channel *ngFor="let channel of channels"
+    <app-channel *ngFor="let channel of (channels | async)"
                  [channel]="channel"
-                 (clickedOnChannel)="joinChannel($event)">
+                 (clickedOnChannel)="joinChannel(channel)">
     </app-channel>
   </div>
 </div>
