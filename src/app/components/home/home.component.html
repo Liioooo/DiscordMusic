@@ -6,11 +6,15 @@
     <div>
       <app-channel *ngFor="let channel of (channels | async)"
                    [channel]="channel"
-                   [channelCurrentlyActive]="currentChannel === channel.id"
                    (clickedOnChannel)="joinChannel(channel)">
       </app-channel>
     </div>
   </div>
   <div class="main-content">
+      <div class="song=container">
+          <p *ngFor="let song of audioService.songQueue">{{song.name}}</p>
+      </div>
+      <app-song-adder></app-song-adder>
+      <app-player></app-player>
   </div>
 </div>

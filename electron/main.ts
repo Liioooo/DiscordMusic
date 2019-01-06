@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as url from 'url';
 import {DiscordManager} from './DiscordManager';
 
-let win: BrowserWindow, serve, discordMan;
+let win: BrowserWindow, serve, discordMan: DiscordManager;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
@@ -42,6 +42,7 @@ try {
   app.on('ready', createWindow);
 
   app.on('window-all-closed', () => {
+      discordMan.disconnect();
       if (process.platform !== 'darwin') {
         app.quit();
       }

@@ -1,1 +1,1 @@
-<p class="p-2 m-0" (click)="handleClick()" [class.text-info]="channelCurrentlyActive">{{channel['name']}}</p>
+<p class="p-2 m-0" (click)="handleClick()" [class.text-info]="discordService.currentChannel === channel.id">{{channel['name']}}</p>

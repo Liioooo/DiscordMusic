@@ -13,13 +13,21 @@ import {NgxElectronModule} from 'ngx-electron';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { ChannelComponent } from './components/channel/channel.component';
+import { SongComponent } from './components/song/song.component';
+import { PlayerComponent } from './components/player/player.component';
+import { SongAdderComponent } from './components/song-adder/song-adder.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
   declarations: [
       AppComponent,
       LoginComponent,
       HomeComponent,
-      ChannelComponent
+      ChannelComponent,
+      SongComponent,
+      PlayerComponent,
+      SongAdderComponent,
+      TruncatePipe
   ],
   imports: [
       BrowserModule,

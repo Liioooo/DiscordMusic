@@ -1,6 +1,8 @@
 @import "~bootswatch/dist/superhero/variables";
 
 p {
+  user-select: none;
+
   &:hover {
     background-color: $gray-600;
     cursor: pointer;

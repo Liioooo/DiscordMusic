@@ -1,11 +1,12 @@
 import * as Discord from 'discord.js';
 import {Channel, Client, Snowflake, VoiceChannel, VoiceConnection} from 'discord.js';
 import { ipcMain, WebContents } from 'electron';
+import {VoiceManager} from './VoiceManager';
 
 export class DiscordManager {
 
     private client: Client;
-    private voiceConnection: VoiceConnection;
+    private voiceManager: VoiceManager;
 
     constructor(private webContents: WebContents) {
         this.client = new Discord.Client();
@@ -14,7 +15,7 @@ export class DiscordManager {
 
     private registerListeners() {
         ipcMain.on('login', (event, data) => this.returnResult('loginResponse', this.login(data['token'])));
-        ipcMain.on('getChannels', (event, data) => this.returnResult('getChannelsResponse', this.getChannels()));
+        ipcMain.on('getChannels', () => this.returnResult('getChannelsResponse', this.getChannels()));
         ipcMain.on('joinChannel', (event, data) => this.returnResult('joinChannelResponse', this.joinChannel(data['channel'])));
     }
 
@@ -32,8 +33,25 @@ export class DiscordManager {
         });
     }
 
+    private listenForClientMoved() {
+        this.client.on('voiceStateUpdate', (oldMember, newMember) => {
+           if (newMember.user.id === this.client.user.id) {
+               this.voiceManager.voiceConnection = newMember.voiceChannel.connection;
+               this.webContents.send('botMoved', {
+                   channel: newMember.voiceChannel
+               });
+           }
+        });
+    }
+
     private login(token: string): Promise<string> {
+        this.listenForClientMoved();
+        this.voiceManager = new VoiceManager();
         return this.client.login(token);
+    }
+
+    public disconnect() {
+        this.client.destroy();
     }
 
     private getChannels(): Promise<any> {
@@ -47,7 +65,7 @@ export class DiscordManager {
 
     private async joinChannel(channel: VoiceChannel): Promise<Snowflake> {
             const vc = this.client.channels.get(channel.id) as VoiceChannel;
-            this.voiceConnection = await vc.join();
+            this.voiceManager.voiceConnection = await vc.join();
             return vc.id;
     }
 

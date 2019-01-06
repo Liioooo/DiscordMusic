@@ -1,0 +1,10 @@
+<div class="row container-fluid m-0 h-100">
+  <div class="align-self-center input-group col-9">
+    <input class="form-control" type="text" placeholder="Paste YouTube Link here" [class.is-invalid]="youtubeLinkError" (change)="youTubeInputChanged()" [(ngModel)]="youtubeLink">
+    <div class="input-group-append">
+      <button class="btn btn-info" [disabled]="!youtubeLinkHasValue()" (click)="addYoutube()">Add</button>
+    </div>
+  </div>
+  <button class="btn btn-info col-3 align-self-center" (click)="addFile()">Add File</button>
+  <input id="addSongFileInput" class="d-none" (change)="fileInInputChanged($event)" type="file" accept="audio/*">
+</div>

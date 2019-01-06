@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ElectronService} from 'ngx-electron';
-import {DiscordService} from '../../services/discord.service';
+import {DiscordService} from '../../services/discord/discord.service';
 import {Router} from '@angular/router';
 
 @Component({

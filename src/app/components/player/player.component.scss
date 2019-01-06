@@ -1,0 +1,24 @@
+@import "~bootswatch/dist/superhero/variables";
+@import "../../../mixins";
+
+div {
+  background-color: $gray-800;
+
+  .buttons {
+    width: 320px;
+
+    @include mediaQuery(800px, max) {
+      width: 100%;
+    }
+
+    i {
+      user-select: none;
+      font-size: 25pt;
+
+      &:hover {
+        cursor: pointer;
+        color: $gray-600;
+      }
+    }
+  }
+}
