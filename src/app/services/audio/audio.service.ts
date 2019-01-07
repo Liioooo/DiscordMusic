@@ -21,9 +21,10 @@ export class AudioService {
 
   public addSongYouTube(song: Song): boolean {
       if (this.checkYouTubeURL(song.path)) {
-        this.getSongName(song).then(name => {
-            song.name = name;
-            this._songQueue.push(song);
+          song.name = 'Loading...';
+          const newItem = this._songQueue.push(song) - 1;
+          this.getSongName(song).then(name => {
+              this._songQueue[newItem].name = name;
         });
         return true;
       }

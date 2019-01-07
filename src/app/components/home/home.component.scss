@@ -26,7 +26,21 @@
   }
 
   .main-content {
+    position: relative;
     display: grid;
     grid-template-rows: auto 60px 60px;
+
+    .song-container {
+      background-color: $gray-700;
+
+      div {
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        height: calc(100% - 120px);
+        overflow:auto ;
+      }
+    }
   }
 }

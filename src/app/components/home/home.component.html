@@ -11,8 +11,10 @@
     </div>
   </div>
   <div class="main-content">
-      <div class="song=container">
-          <p *ngFor="let song of audioService.songQueue">{{song.name}}</p>
+      <div class="song-container">
+          <div>
+              <app-song *ngFor="let song of audioService.songQueue" [song]="song"></app-song>
+          </div>
       </div>
       <app-song-adder></app-song-adder>
       <app-player></app-player>
