@@ -12,8 +12,15 @@
   </div>
   <div class="main-content">
       <div class="song-container">
-          <div>
-              <app-song *ngFor="let song of audioService.songQueue" [song]="song"></app-song>
+          <div class="absoluteContainer p-3">
+              <div class="border-bottom border-light">
+                  <h4 class="font-weight-bold">Current Song:</h4>
+                  <p class="m-0 p-2">{{audioService.songQueue[audioService.currentQueuePos]?.name}}</p>
+              </div>
+              <h4 class="font-weight-bold pt-3">Song Queue:</h4>
+              <div *ngFor="let song of audioService.songQueue; index as i">
+                <app-song *ngIf="i > audioService.currentQueuePos" [song]="song" [queuePosition]="i"></app-song>
+              </div>
           </div>
       </div>
       <app-song-adder></app-song-adder>

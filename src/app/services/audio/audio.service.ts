@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Song} from '../../models/Song';
 import {getBasicInfo, validateURL, videoInfo} from 'ytdl-core';
+import {IpcService} from '../ipc/ipc.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +9,57 @@ import {getBasicInfo, validateURL, videoInfo} from 'ytdl-core';
 export class AudioService {
 
   private _songQueue = <Song[]>[];
+  private _currentQueuePos = 0;
+  private _playState = false;
 
-  constructor() { }
+  constructor(private ipcService: IpcService) { }
 
-  public get songQueue() {
+  public get songQueue(): Song[] {
       return this._songQueue;
+  }
+
+  public get currentQueuePos(): number {
+      return this._currentQueuePos;
+  }
+
+  public get playState(): boolean {
+      return this._playState;
   }
 
   public checkYouTubeURL(url: string) {
     return validateURL(url);
+  }
+
+  public moveUp(id: number) {
+      const oldUpper = this._songQueue[id - 1];
+      this._songQueue[id - 1] = this._songQueue[id];
+      this._songQueue[id] = oldUpper;
+  }
+
+  public moveDown(id: number) {
+      const oldLower = this._songQueue[id + 1];
+      this._songQueue[id + 1] = this._songQueue[id];
+      this._songQueue[id] = oldLower;
+  }
+
+  public remove(id: number) {
+      this._songQueue = this._songQueue.filter((value, index) => index !== id);
+  }
+
+  public back() {
+      if (this._currentQueuePos > 0) {
+          this._currentQueuePos--;
+      }
+  }
+
+  public next() {
+      if (this._currentQueuePos < this._songQueue.length - 1) {
+          this._currentQueuePos++;
+      }
+  }
+
+  public playPause() {
+
   }
 
   public addSongYouTube(song: Song): boolean {

@@ -1,6 +1,11 @@
-<div class="p-2 border-bottom border-light">
+<div class="p-2 border-light border-bottom">
   <p class="text-white m-0">
-    {{song.name}}
+    {{song.name | truncate : 30}}
   </p>
+  <div>
+    <i class="material-icons ml-1 mr-1" (click)="remove()">close</i>
+    <i *ngIf="!isLast()" class="material-icons ml-1 mr-1" (click)="moveDow()">arrow_downward</i>
+    <i *ngIf="!isFirst()" class="material-icons ml-1 mr-1" (click)="moveUp()">arrow_upward</i>
+  </div>
 </div>
 

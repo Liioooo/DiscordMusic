@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Song} from '../../models/Song';
+import {DiscordService} from '../../services/discord/discord.service';
+import {AudioService} from '../../services/audio/audio.service';
 
 @Component({
   selector: 'app-song',
@@ -8,12 +10,35 @@ import {Song} from '../../models/Song';
 })
 export class SongComponent implements OnInit {
 
-  @Input()
-  public song: Song
+    @Input()
+    public song: Song;
 
-  constructor() { }
+    @Input()
+    public queuePosition: number;
 
-  ngOnInit() {
-  }
+    constructor(private audioService: AudioService) { }
+
+    ngOnInit() {
+    }
+
+    public isLast(): boolean {
+      return this.queuePosition === this.audioService.songQueue.length - 1;
+    }
+
+    public isFirst() {
+        return this.queuePosition === this.audioService.currentQueuePos + 1;
+    }
+
+    public moveUp() {
+        this.audioService.moveUp(this.queuePosition);
+    }
+
+    public moveDow() {
+        this.audioService.moveDown(this.queuePosition);
+    }
+
+    public remove() {
+        this.audioService.remove(this.queuePosition);
+    }
 
 }

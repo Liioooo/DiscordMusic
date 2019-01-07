@@ -7,7 +7,7 @@ import {IpcService} from '../ipc/ipc.service';
 })
 export class DiscordService {
 
-    public currentChannel: Snowflake;
+    public currentChannel: Snowflake = null;
 
     constructor(private appRef: ApplicationRef, private ipcService: IpcService) {}
 

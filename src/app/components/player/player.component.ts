@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AudioService} from '../../services/audio/audio.service';
 
 @Component({
   selector: 'app-player',
@@ -7,11 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayerComponent implements OnInit {
 
-  public currentSongName = 'Song Name is to long xd hahahhahhaha';
 
-  constructor() { }
+  constructor(public audioService: AudioService) { }
 
   ngOnInit() {
+  }
+
+  public back() {
+      this.audioService.back();
+  }
+
+  public next() {
+      this.audioService.next();
+  }
+
+  public playPause() {
+    this.audioService.playPause();
   }
 
 }
