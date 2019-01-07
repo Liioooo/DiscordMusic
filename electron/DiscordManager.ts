@@ -1,5 +1,5 @@
 import * as Discord from 'discord.js';
-import {Channel, Client, Snowflake, VoiceChannel, VoiceConnection} from 'discord.js';
+import {Channel, Client, Snowflake, VoiceChannel} from 'discord.js';
 import { ipcMain, WebContents } from 'electron';
 import {VoiceManager} from './VoiceManager';
 
