@@ -11,8 +11,11 @@ export class AudioService {
   private _songQueue = <Song[]>[];
   private _currentQueuePos = 0;
   private _playState = false;
+  private _startedPlayingCurrentSong = false;
 
-  constructor(private ipcService: IpcService) { }
+  constructor(private ipcService: IpcService) {
+      this.ipcService.songEnded.subscribe(() => this.next());
+  }
 
   public get songQueue(): Song[] {
       return this._songQueue;
@@ -49,17 +52,41 @@ export class AudioService {
   public back() {
       if (this._currentQueuePos > 0) {
           this._currentQueuePos--;
+          this._startedPlayingCurrentSong = false;
+          if (this._playState) { this.playSong(this._songQueue[this.currentQueuePos]); }
       }
   }
 
   public next() {
       if (this._currentQueuePos < this._songQueue.length - 1) {
           this._currentQueuePos++;
+          this._startedPlayingCurrentSong = false;
+          if (this._playState) { this.playSong(this._songQueue[this.currentQueuePos]); }
       }
   }
 
   public playPause() {
+        if (this._songQueue.length === 0) {return; }
+        if (this._playState) {
+            this.ipcService.sendIPC('pause', {});
+            this._playState = false;
+            return;
+        }
+        if (this._startedPlayingCurrentSong) {
+            this.ipcService.sendIPC('resume', {});
+        } else {
+            this.playSong(this._songQueue[this.currentQueuePos]);
+            this._playState = true;
+            this._startedPlayingCurrentSong = true;
+        }
+  }
 
+  private playSong(song: Song) {
+      if (song.type === 'file') {
+            this.ipcService.sendIPC('playFile', song.path);
+      } else {
+          this.ipcService.sendIPC('playYT', song.path);
+      }
   }
 
   public addSongYouTube(song: Song): boolean {

@@ -46,7 +46,7 @@ export class DiscordManager {
 
     private login(token: string): Promise<string> {
         this.listenForClientMoved();
-        this.voiceManager = new VoiceManager();
+        this.voiceManager = new VoiceManager(this.webContents);
         return this.client.login(token);
     }
 

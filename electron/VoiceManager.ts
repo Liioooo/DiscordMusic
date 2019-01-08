@@ -1,12 +1,18 @@
 import {StreamDispatcher, VoiceConnection} from 'discord.js';
 import * as ytdl from 'ytdl-core';
+import {WebContents, ipcMain} from 'electron';
 
 export class VoiceManager {
 
     private connection: VoiceConnection;
     private voiceDispatcher: StreamDispatcher;
 
-    constructor() {}
+    constructor(private webContents: WebContents) {
+        ipcMain.on('playYT', (event, data) => this.playYouTube(data['path']));
+        ipcMain.on('playFile', (event, data) => this.playFile(data['path']));
+        ipcMain.on('resume', () => this.resume());
+        ipcMain.on('pause', () => this.pause());
+    }
 
     public set voiceConnection(vc: VoiceConnection) {
         this.connection = vc;
@@ -15,12 +21,14 @@ export class VoiceManager {
     public playFile(path: string) {
         this.pause();
         this.voiceDispatcher = this.connection.playFile(path);
+        this.appendEndEvent();
         this.resume();
     }
 
     public playYouTube(url: string) {
         this.pause();
         this.voiceDispatcher = this.connection.playStream(ytdl(url, {filter: 'audioonly'}));
+        this.appendEndEvent();
         this.resume();
     }
 
@@ -38,5 +46,9 @@ export class VoiceManager {
         if (!this.isPlaying) {
             this.voiceDispatcher.resume();
         }
+    }
+
+    private appendEndEvent() {
+        this.voiceDispatcher.on('end', () => this.webContents.send('songIsOver'));
     }
 }

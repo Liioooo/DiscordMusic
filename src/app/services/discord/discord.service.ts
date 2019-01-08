@@ -16,17 +16,17 @@ export class DiscordService {
             this.currentChannel = newChannel;
             this.appRef.tick();
         });
-        return this.ipcService.sendIPC('login', {
+        return this.ipcService.sendIPCwithResponse('login', {
               token: token
         });
     }
 
     public getChannels(): Promise<Array<VoiceChannel>> {
-        return this.ipcService.sendIPC('getChannels', {});
+        return this.ipcService.sendIPCwithResponse('getChannels', {});
     }
 
     public joinChannel(channel: VoiceChannel): Promise<Snowflake> {
-        return this.ipcService.sendIPC('joinChannel', {
+        return this.ipcService.sendIPCwithResponse('joinChannel', {
             channel: channel
         });
     }
