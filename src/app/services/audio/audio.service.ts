@@ -53,7 +53,10 @@ export class AudioService {
       if (this._currentQueuePos > 0) {
           this._currentQueuePos--;
           this._startedPlayingCurrentSong = false;
-          if (this._playState) { this.playSong(this._songQueue[this.currentQueuePos]); }
+          if (this._playState) {
+              this._startedPlayingCurrentSong = true;
+              this.playSong(this._songQueue[this.currentQueuePos]);
+          }
       }
   }
 
@@ -61,7 +64,10 @@ export class AudioService {
       if (this._currentQueuePos < this._songQueue.length - 1) {
           this._currentQueuePos++;
           this._startedPlayingCurrentSong = false;
-          if (this._playState) { this.playSong(this._songQueue[this.currentQueuePos]); }
+          if (this._playState) {
+              this._startedPlayingCurrentSong = true;
+              this.playSong(this._songQueue[this.currentQueuePos]);
+          }
       }
   }
 
@@ -74,6 +80,7 @@ export class AudioService {
         }
         if (this._startedPlayingCurrentSong) {
             this.ipcService.sendIPC('resume', {});
+            this._playState = true;
         } else {
             this.playSong(this._songQueue[this.currentQueuePos]);
             this._playState = true;
@@ -83,9 +90,9 @@ export class AudioService {
 
   private playSong(song: Song) {
       if (song.type === 'file') {
-            this.ipcService.sendIPC('playFile', song.path);
+            this.ipcService.sendIPC('playFile', {path: song.path});
       } else {
-          this.ipcService.sendIPC('playYT', song.path);
+          this.ipcService.sendIPC('playYT', {path: song.path});
       }
   }
 
@@ -114,6 +121,7 @@ export class AudioService {
       } else {
         return new Promise<string>(resolve => {
             getBasicInfo(song.path).then((info: videoInfo) => {
+                console.log("asa");
               resolve(info.title);
             });
         });

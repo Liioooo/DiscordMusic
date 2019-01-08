@@ -19,17 +19,15 @@ export class VoiceManager {
     }
 
     public playFile(path: string) {
-        this.pause();
+        console.log('play start');
         this.voiceDispatcher = this.connection.playFile(path);
+        console.log('playing');
         this.appendEndEvent();
-        this.resume();
     }
 
     public playYouTube(url: string) {
-        this.pause();
         this.voiceDispatcher = this.connection.playStream(ytdl(url, {filter: 'audioonly'}));
         this.appendEndEvent();
-        this.resume();
     }
 
     public get isPlaying(): boolean {
