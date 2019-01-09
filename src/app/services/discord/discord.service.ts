@@ -30,4 +30,8 @@ export class DiscordService {
             channel: channel
         });
     }
+
+    public leaveChannel() {
+        this.ipcService.sendIPC('leaveChannel', {});
+    }
 }

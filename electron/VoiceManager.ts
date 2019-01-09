@@ -18,6 +18,10 @@ export class VoiceManager {
         this.connection = vc;
     }
 
+    public disconnectVoice() {
+        this.connection.disconnect();
+    }
+
     public playFile(path: string) {
         console.log('play start');
         this.voiceDispatcher = this.connection.playFile(path);
