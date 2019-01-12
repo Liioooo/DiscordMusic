@@ -11,6 +11,10 @@ export class DiscordService {
 
     constructor(private appRef: ApplicationRef, private ipcService: IpcService) {}
 
+    public get currentlyInChannel(): boolean {
+        return this.currentChannel !== null;
+    }
+
     public login(token: string): Promise<string> {
         this.ipcService.botMoved.subscribe((newChannel: Snowflake) => {
             this.currentChannel = newChannel;
@@ -29,5 +33,13 @@ export class DiscordService {
         return this.ipcService.sendIPCwithResponse('joinChannel', {
             channel: channel
         });
+    }
+
+    public leaveChannel() {
+        this.ipcService.sendIPC('leaveChannel', {});
+    }
+
+    public disconnect() {
+        this.ipcService.sendIPC('disconnect', {});
     }
 }

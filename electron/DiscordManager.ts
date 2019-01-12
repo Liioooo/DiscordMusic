@@ -7,6 +7,7 @@ export class DiscordManager {
 
     private client: Client;
     private voiceManager: VoiceManager;
+    private currentChannel: VoiceChannel = null;
 
     constructor(private webContents: WebContents) {
         this.client = new Discord.Client();
@@ -17,6 +18,8 @@ export class DiscordManager {
         ipcMain.on('login', (event, data) => this.returnResult('loginResponse', this.login(data['token'])));
         ipcMain.on('getChannels', () => this.returnResult('getChannelsResponse', this.getChannels()));
         ipcMain.on('joinChannel', (event, data) => this.returnResult('joinChannelResponse', this.joinChannel(data['channel'])));
+        ipcMain.on('leaveChannel', () => this.leaveChannel());
+        ipcMain.on('disconnect', () => this.disconnect());
     }
 
     private returnResult(responseName: string, promise: Promise<any>) {
@@ -50,6 +53,13 @@ export class DiscordManager {
         return this.client.login(token);
     }
 
+    private leaveChannel() {
+        if (this.currentChannel !== null) {
+            this.currentChannel.leave();
+        }
+        this.currentChannel = null;
+    }
+
     public disconnect() {
         this.client.destroy();
     }
@@ -65,6 +75,7 @@ export class DiscordManager {
 
     private async joinChannel(channel: VoiceChannel): Promise<Snowflake> {
             const vc = this.client.channels.get(channel.id) as VoiceChannel;
+            this.currentChannel = vc;
             this.voiceManager.voiceConnection = await vc.join();
             return vc.id;
     }

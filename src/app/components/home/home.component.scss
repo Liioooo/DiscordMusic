@@ -23,6 +23,16 @@
 
   .channels {
     overflow: auto;
+
+    .channelList {
+      margin-bottom: 108px;
+    }
+
+    .leaveDisconnectButtons {
+      display: flex;
+      flex-direction: column;
+      width: 192px;
+    }
   }
 
   .main-content {

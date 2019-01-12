@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Song} from '../../models/Song';
 import {getBasicInfo, validateURL, videoInfo} from 'ytdl-core';
 import {IpcService} from '../ipc/ipc.service';
+import {DiscordService} from '../discord/discord.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AudioService {
   private _playState = false;
   private _startedPlayingCurrentSong = false;
 
-  constructor(private ipcService: IpcService) {
+  constructor(private ipcService: IpcService, private discordService: DiscordService) {
       this.ipcService.songEnded.subscribe(() => this.next());
   }
 
@@ -72,7 +73,7 @@ export class AudioService {
   }
 
   public playPause() {
-        if (this._songQueue.length === 0) {return; }
+        if (this._songQueue.length === 0 || !this.discordService.currentlyInChannel) {return; }
         if (this._playState) {
             this.ipcService.sendIPC('pause', {});
             this._playState = false;
@@ -121,7 +122,6 @@ export class AudioService {
       } else {
         return new Promise<string>(resolve => {
             getBasicInfo(song.path).then((info: videoInfo) => {
-                console.log("asa");
               resolve(info.title);
             });
         });

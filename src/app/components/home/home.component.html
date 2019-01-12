@@ -1,14 +1,18 @@
 <div class="wrapper">
   <div class="bg-dark channels">
-    <div class="alert alert-warning m-0 sticky-top" role="alert" *ngIf="showingJoinError">
-      {{joinError}}
-    </div>
-    <div>
-      <app-channel *ngFor="let channel of (channels | async)"
-                   [channel]="channel"
-                   (clickedOnChannel)="joinChannel(channel)">
-      </app-channel>
-    </div>
+      <div class="alert alert-warning m-0 sticky-top" role="alert" *ngIf="showingJoinError">
+        {{joinError}}
+      </div>
+      <div class="channelList">
+        <app-channel *ngFor="let channel of (channels | async)"
+                     [channel]="channel"
+                     (clickedOnChannel)="joinChannel(channel)">
+        </app-channel>
+      </div>
+      <div class="fixed-bottom leaveDisconnectButtons p-2 bg-dark">
+          <button class="btn btn-info m-1" (click)="leaveChannel()">Leave Channel</button>
+          <button class="btn btn-info m-1" (click)="disconnect()">Disconnect</button>
+      </div>
   </div>
   <div class="main-content">
       <div class="song-container">
