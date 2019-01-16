@@ -37,10 +37,10 @@ export class DiscordManager {
 
     private listenForClientMoved() {
         this.client.on('voiceStateUpdate', (oldMember, newMember) => {
-           if (newMember.user.id === this.client.user.id && newMember.voiceChannel) {
-               this.voiceManager.voiceConnection = newMember.voiceChannel.connection;
+           if (newMember.id === this.client.user.id && newMember.channel) {
+               this.voiceManager.voiceConnection = newMember.channel.connection;
                this.webContents.send('botMoved', {
-                   channel: newMember.voiceChannel
+                   channel: newMember.channel
                });
            }
         });

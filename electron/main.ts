@@ -31,6 +31,7 @@ function createWindow() {
   }
 
   discordMan = new DiscordManager(win.webContents);
+  process.env.FFMPEG_PATH = './node_modules/ffmpeg-binaries/bin/ffmpeg.exe';
 
   win.on('closed', () => {
       win = null;

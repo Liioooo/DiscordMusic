@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {ApplicationRef, Injectable} from '@angular/core';
 import {Song} from '../../models/Song';
 import {getBasicInfo, validateURL, videoInfo} from 'ytdl-core';
 import {IpcService} from '../ipc/ipc.service';
@@ -14,8 +14,16 @@ export class AudioService {
   private _playState = false;
   private _startedPlayingCurrentSong = false;
 
-  constructor(private ipcService: IpcService, private discordService: DiscordService) {
-      this.ipcService.songEnded.subscribe(() => this.next());
+  constructor(private ipcService: IpcService, private discordService: DiscordService, private appRef: ApplicationRef) {
+      this.ipcService.songEnded.subscribe(() => {
+          if (this._currentQueuePos < this._songQueue.length - 1) {
+              this.next();
+          } else {
+              this._playState = false;
+              this._startedPlayingCurrentSong = false;
+          }
+          appRef.tick();
+      });
       this.discordService.leftChannel.subscribe(() => {
           this._playState = false;
           this._startedPlayingCurrentSong = false;

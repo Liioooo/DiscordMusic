@@ -27,8 +27,13 @@
     "electron:mac": "npm run build:prod && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/icon256.ico --prune=true --out=release",
     "electron:linux": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/icon256.ico --prune=true --out=release"
   },
+  "build": {
+    "asarUnpack": [
+
+    ]
+  },
   "dependencies": {
-    "discord.js": "^11.4.2",
+    "discord.js": "git://github.com/Liiioooo/discord.js.git#master",
     "ffmpeg-binaries": "^4.0.0",
     "opusscript": "0.0.6",
     "ytdl-core": "^0.28.3"

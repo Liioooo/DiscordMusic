@@ -26,13 +26,13 @@ export class VoiceManager {
 
     public playFile(path: string) {
         console.log('play', path);
-        this.voiceDispatcher = this.connection.playFile(path);
+        this.voiceDispatcher = this.connection.play(path);
         this.appendEndEvent();
     }
 
     public playYouTube(url: string) {
         console.log('play', url);
-        this.voiceDispatcher = this.connection.playStream(ytdl(url, {filter: 'audioonly'}));
+        this.voiceDispatcher = this.connection.play(ytdl(url, {filter: 'audioonly'}));
         this.appendEndEvent();
     }
 
@@ -53,6 +53,6 @@ export class VoiceManager {
     }
 
     private appendEndEvent() {
-        this.voiceDispatcher.on('end', () => this.webContents.send('songEnded'));
+        this.voiceDispatcher.on('finish', () => this.webContents.send('songEnded'));
     }
 }
