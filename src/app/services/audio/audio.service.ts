@@ -16,6 +16,10 @@ export class AudioService {
 
   constructor(private ipcService: IpcService, private discordService: DiscordService) {
       this.ipcService.songEnded.subscribe(() => this.next());
+      this.discordService.leftChannel.subscribe(() => {
+          this._playState = false;
+          this._startedPlayingCurrentSong = false;
+      });
   }
 
   public get songQueue(): Song[] {
@@ -69,6 +73,8 @@ export class AudioService {
               this._startedPlayingCurrentSong = true;
               this.playSong(this._songQueue[this.currentQueuePos]);
           }
+      } else {
+          this._playState = false;
       }
   }
 

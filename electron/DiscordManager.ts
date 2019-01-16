@@ -19,7 +19,6 @@ export class DiscordManager {
         ipcMain.on('getChannels', () => this.returnResult('getChannelsResponse', this.getChannels()));
         ipcMain.on('joinChannel', (event, data) => this.returnResult('joinChannelResponse', this.joinChannel(data['channel'])));
         ipcMain.on('leaveChannel', () => this.leaveChannel());
-        ipcMain.on('disconnect', () => this.disconnect());
     }
 
     private returnResult(responseName: string, promise: Promise<any>) {
@@ -38,7 +37,7 @@ export class DiscordManager {
 
     private listenForClientMoved() {
         this.client.on('voiceStateUpdate', (oldMember, newMember) => {
-           if (newMember.user.id === this.client.user.id) {
+           if (newMember.user.id === this.client.user.id && newMember.voiceChannel) {
                this.voiceManager.voiceConnection = newMember.voiceChannel.connection;
                this.webContents.send('botMoved', {
                    channel: newMember.voiceChannel

@@ -1,6 +1,9 @@
 import {ApplicationRef, Injectable} from '@angular/core';
 import {Snowflake, VoiceChannel} from 'discord.js';
 import {IpcService} from '../ipc/ipc.service';
+import {Router} from '@angular/router';
+import {AudioService} from '../audio/audio.service';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +11,7 @@ import {IpcService} from '../ipc/ipc.service';
 export class DiscordService {
 
     public currentChannel: Snowflake = null;
+    private _leftChannelSubject = new Subject<void>();
 
     constructor(private appRef: ApplicationRef, private ipcService: IpcService) {}
 
@@ -33,5 +37,11 @@ export class DiscordService {
 
     public leaveChannel() {
         this.ipcService.sendIPC('leaveChannel', {});
+        this.currentChannel = null;
+        this._leftChannelSubject.next();
+    }
+
+    public get leftChannel(): Observable<void> {
+        return this._leftChannelSubject.asObservable();
     }
 }

@@ -19,17 +19,19 @@ export class VoiceManager {
     }
 
     public disconnectVoice() {
-        this.connection.disconnect();
+        if (this.connection) {
+            this.connection.disconnect();
+        }
     }
 
     public playFile(path: string) {
-        console.log('play start');
+        console.log('play', path);
         this.voiceDispatcher = this.connection.playFile(path);
-        console.log('playing');
         this.appendEndEvent();
     }
 
     public playYouTube(url: string) {
+        console.log('play', url);
         this.voiceDispatcher = this.connection.playStream(ytdl(url, {filter: 'audioonly'}));
         this.appendEndEvent();
     }

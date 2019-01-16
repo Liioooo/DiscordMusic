@@ -10,7 +10,7 @@ import {Snowflake} from 'discord.js';
 export class IpcService {
 
     private _botMovedSubject: Subject<Snowflake>;
-    private _songEndedSubject: Subject<any>;
+    private _songEndedSubject = new Subject<void>();
 
     constructor(private electronService: ElectronService) { }
 
@@ -39,8 +39,7 @@ export class IpcService {
         return this._botMovedSubject.asObservable();
     }
 
-    public get songEnded(): Observable<any> {
-        this._songEndedSubject = new Subject<any>();
+    public get songEnded(): Observable<void> {
         this.electronService.ipcRenderer.on('songEnded', () => this._songEndedSubject.next());
         return this._songEndedSubject.asObservable();
     }

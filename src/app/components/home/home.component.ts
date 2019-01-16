@@ -37,8 +37,4 @@ export class HomeComponent implements OnInit {
       this.discordService.leaveChannel();
   }
 
-  public disconnect() {
-      this.discordService.logout();
-  }
-
 }
