@@ -7,7 +7,7 @@ export class DiscordManager {
 
     private client: Client;
     private voiceManager: VoiceManager;
-    private currentChannel: VoiceChannel = null;
+    private currentChannel: VoiceChannel;
 
     constructor(private webContents: WebContents) {
         this.client = new Discord.Client();
@@ -53,13 +53,6 @@ export class DiscordManager {
         return this.client.login(token);
     }
 
-    private leaveChannel() {
-        if (this.currentChannel !== null) {
-            this.currentChannel.leave();
-        }
-        this.currentChannel = null;
-    }
-
     public disconnect() {
         this.client.destroy();
     }
@@ -78,6 +71,14 @@ export class DiscordManager {
             this.currentChannel = vc;
             this.voiceManager.voiceConnection = await vc.join();
             return vc.id;
+    }
+
+    private leaveChannel() {
+        if (this.currentChannel) {
+            this.voiceManager.disconnectVoice();
+            this.currentChannel.leave();
+            delete this.currentChannel;
+        }
     }
 
 }

@@ -73,7 +73,7 @@ export class AudioService {
   }
 
   public playPause() {
-        if (this._songQueue.length === 0 || !this.discordService.currentlyInChannel) {return; }
+        if (this._songQueue.length === 0 || this.discordService.currentChannel === null) {return; }
         if (this._playState) {
             this.ipcService.sendIPC('pause', {});
             this._playState = false;
