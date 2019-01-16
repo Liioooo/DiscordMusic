@@ -53,6 +53,6 @@ export class VoiceManager {
     }
 
     private appendEndEvent() {
-        this.voiceDispatcher.on('end', () => this.webContents.send('songIsOver'));
+        this.voiceDispatcher.on('end', () => this.webContents.send('songEnded'));
     }
 }

@@ -13,7 +13,7 @@
     "postinstall:electron": "node postinstall",
     "ng": "ng",
     "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
-    "build": "npm run postinstall:electron && npm run electron:serve-tsc && ng build",
+    "build": "npm run postinstall:electron && npm run electron:serve-tsc && ng build --prod",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
     "ng:serve": "ng serve",
@@ -23,14 +23,13 @@
     "electron:local": "npm run build:prod && electron .",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run postinstall:web && ng e2e",
-    "electron:windows": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar --platform=win32 --arch=ia32 --prune=true --out=release --version-string.ProductName='DiscordMusic'",
-    "electron:mac": "npm run build:prod && electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --out=release",
-    "electron:linux": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar=true --platform=linux --arch=x64 --prune=true --out=release"
+    "electron:windows": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar --platform=win32 --arch=ia32 --icon=icons/icon256.ico --prune=true --out=release --version-string.ProductName='DiscordMusic'",
+    "electron:mac": "npm run build:prod && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/icon256.ico --prune=true --out=release",
+    "electron:linux": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/icon256.ico --prune=true --out=release"
   },
   "dependencies": {
     "discord.js": "^11.4.2",
     "ffmpeg-binaries": "^4.0.0",
-    "libsodium-wrappers": "^0.7.4",
     "opusscript": "0.0.6",
     "ytdl-core": "^0.28.3"
   },
