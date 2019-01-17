@@ -23,13 +23,14 @@
     "electron:local": "npm run build:prod && electron .",
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run postinstall:web && ng e2e",
-    "electron:windows": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar --platform=win32 --arch=ia32 --icon=icons/icon256.ico --prune=true --out=release --version-string.ProductName='DiscordMusic'",
-    "electron:mac": "npm run build:prod && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/icon256.ico --prune=true --out=release",
-    "electron:linux": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/icon256.ico --prune=true --out=release"
+    "electron:windows32": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar --platform=win32 --arch=ia32 --icon=icons/icon256.ico --prune=true --out=release --version-string.ProductName='DiscordMusic' && node copyFfmpegToRelease.js --win32",
+    "electron:windows64": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar --platform=win32 --arch=x64 --icon=icons/icon256.ico --prune=true --out=release --version-string.ProductName='DiscordMusic' && node copyFfmpegToRelease.js --win64",
+    "electron:mac": "npm run build:prod && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/icon256.ico --prune=true --out=release && node copyFfmpegToRelease.js --mac",
+    "electron:linux": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/icon256.ico --prune=true --out=release && node copyFfmpegToRelease.js --linux"
   },
   "dependencies": {
     "discord.js": "git://github.com/Liiioooo/discord.js.git#master",
-    "ffmpeg-static": "^2.4.0",
+    "libsodium-wrappers": "^0.7.4",
     "opusscript": "0.0.6",
     "ytdl-core": "^0.28.3"
   },
@@ -73,6 +74,7 @@
     "typescript": "3.1.6",
     "wait-on": "3.2.0",
     "webdriver-manager": "12.1.0",
-    "zone.js": "0.8.26"
+    "zone.js": "0.8.26",
+    "ffmpeg-static": "^2.4.0"
   }
 }
