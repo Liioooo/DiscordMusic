@@ -15,9 +15,14 @@
                         <span *ngIf="loginForm.controls.token.errors.required">Please type in a Token!</span>
                         <span *ngIf="loginForm.controls.token.errors.invalid">Token is invalid!</span>
                     </div>
-                    <button class="btn btn-primary float-right mt-2">Login</button>
                 </div>
-                <a href="#" class="text-info mt-2" *ngIf="clientIDHasValue()" (click)="openBotAuthSite()">Add Bot to Server</a>
+                <div class="row mt-2 w-100 p-0 m-0">
+                    <div class="col-3 pl-0 d-flex">
+                        <a href="#" class="text-info align-self-center" *ngIf="clientIDHasValue()" (click)="openBotAuthSite()">Add Bot to Server</a>
+                    </div>
+                    <a href="#" class="text-info col-7 text-right align-self-center" (click)="howToClicked()">How to create a Bot?</a>
+                    <button class="btn btn-primary col-2">Login</button>
+                </div>
             </form>
         </div>
     </div>

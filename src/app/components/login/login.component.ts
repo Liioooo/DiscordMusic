@@ -48,4 +48,8 @@ export class LoginComponent implements OnInit {
         this.electronService.shell.openExternal(`https://discordapp.com/oauth2/authorize?client_id=${clientID}&scope=bot&permissions=70466624`);
     }
 
+    public howToClicked() {
+        this.electronService.shell.openExternal(''); // TODO: add tutorial video link
+    }
+
 }
