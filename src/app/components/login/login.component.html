@@ -10,17 +10,23 @@
                 </div>
                 <div class="form-group">
                     <label for="token">Token</label>
-                    <input id="token" class="form-control" [class.is-invalid]="loginFormSubmitted && loginForm.controls.token.errors" type="text" name="token" formControlName="token">
+                    <div class="d-flex">
+                        <input id="token" class="form-control" [class.is-invalid]="loginFormSubmitted && loginForm.controls.token.errors" type="text" name="token" formControlName="token">
+                        <div class="input-group-append align-items-center pl-2 remember-check-group">
+                            <input type="checkbox" class="mr-2" id="rememberToken" name="rememberToken" formControlName="rememberToken">
+                            <label for="rememberToken" class="text-nowrap m-0 mr-1">Remember</label>
+                        </div>
+                    </div>
                     <div class="invalid-feedback d-block" *ngIf="loginFormSubmitted && loginForm.controls.token.errors">
                         <span *ngIf="loginForm.controls.token.errors.required">Please type in a Token!</span>
                         <span *ngIf="loginForm.controls.token.errors.invalid">Token is invalid!</span>
                     </div>
                 </div>
                 <div class="row mt-2 w-100 p-0 m-0">
-                    <div class="col-3 pl-0 d-flex">
+                    <div class="col-4 pl-0 d-flex">
                         <a href="#" class="text-info align-self-center" *ngIf="clientIDHasValue()" (click)="openBotAuthSite()">Add Bot to Server</a>
                     </div>
-                    <a href="#" class="text-info col-7 text-right align-self-center" (click)="howToClicked()">How to create a Bot?</a>
+                    <a href="#" class="text-info col-6 text-right align-self-center" (click)="howToClicked()">How to create a Bot?</a>
                     <button class="btn btn-primary col-2">Login</button>
                 </div>
             </form>

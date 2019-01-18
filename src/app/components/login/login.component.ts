@@ -19,8 +19,10 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             clientID: [''],
-            token: ['', Validators.required]
+            token: ['', Validators.required],
+            rememberToken: ['']
         });
+        this.loginForm.controls.token.setValue(this.readToken());
     }
 
     public loginFormSubmit() {
@@ -30,8 +32,12 @@ export class LoginComponent implements OnInit {
             return;
         }
 
+
         const token = this.loginForm.controls.token.value;
         this.discordService.login(token).then(() => {
+            if (this.loginForm.controls.rememberToken.value === true) {
+                this.saveToken(token);
+            }
             this.router.navigate(['/home']);
         }).catch(() => {
             this.loginForm.controls.token.setErrors({invalid: true});
@@ -50,6 +56,15 @@ export class LoginComponent implements OnInit {
 
     public howToClicked() {
         this.electronService.shell.openExternal(''); // TODO: add tutorial video link
+    }
+
+    private saveToken(token: string) {
+        localStorage.setItem('token', token);
+    }
+
+    private readToken(): string {
+        const token = localStorage.getItem('token');
+        return token === null ? '' : token;
     }
 
 }
