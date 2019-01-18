@@ -25,7 +25,7 @@
     "e2e": "npm run postinstall:web && ng e2e",
     "electron:windows32": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar --platform=win32 --arch=ia32 --icon=icons/icon256.ico --prune=true --out=release --version-string.ProductName='DiscordMusic' && node copyFfmpegToRelease.js --win32",
     "electron:windows64": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar --platform=win32 --arch=x64 --icon=icons/icon256.ico --prune=true --out=release --version-string.ProductName='DiscordMusic' && node copyFfmpegToRelease.js --win64",
-    "electron:mac": "npm run build:prod && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/icon256.ico --prune=true --out=release && node copyFfmpegToRelease.js --mac",
+    "electron:mac": "npm run build:prod && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/icon256.icns --prune=true --out=release && node copyFfmpegToRelease.js --mac",
     "electron:linux": "npm run build:prod && electron-packager . DiscordMusic --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/icon256.ico --prune=true --out=release && node copyFfmpegToRelease.js --linux"
   },
   "dependencies": {

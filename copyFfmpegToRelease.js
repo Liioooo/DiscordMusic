@@ -46,5 +46,6 @@ function copyMac() {
 }
 
 function copyLinux() {
-
+    fs.mkdirSync(path.join(ffmpegBaseDest, 'DiscordMusic-linux-x64', 'bin'));
+    fs.copyFileSync(path.join(ffmpegBasePath, 'linux', 'x64', 'ffmpeg'), path.join(ffmpegBaseDest, 'DiscordMusic-linux-x64', 'bin', 'ffmpeg'));
 }
