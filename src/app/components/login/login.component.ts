@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     }
 
     public howToClicked() {
-        this.electronService.shell.openExternal(''); // TODO: add tutorial video link
+        this.electronService.shell.openExternal('https://github.com/Liiioooo/DiscordMusic/wiki/Creating-a-discord-bot-&-adding-it-to-a-server');
     }
 
     private saveToken(token: string) {
