@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ElectronService} from 'ngx-electron';
 import {DiscordService} from '../../services/discord/discord.service';
 import {Router} from '@angular/router';
+import {TokenSaveService} from '../../services/token-save/token-save.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
     public loginFormSubmitted = false;
 
-    constructor(private formBuilder: FormBuilder, private electronService: ElectronService, private discordService: DiscordService, private router: Router) { }
+    constructor(private formBuilder: FormBuilder, private electronService: ElectronService, private discordService: DiscordService, private router: Router, private tokenSave: TokenSaveService) { }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
             token: ['', Validators.required],
             rememberToken: ['']
         });
-        this.loginForm.controls.token.setValue(this.readToken());
+        this.tokenSave.readToken().then(token => this.loginForm.controls.token.setValue(token));
     }
 
     public loginFormSubmit() {
@@ -59,12 +60,7 @@ export class LoginComponent implements OnInit {
     }
 
     private saveToken(token: string) {
-        localStorage.setItem('token', token);
-    }
-
-    private readToken(): string {
-        const token = localStorage.getItem('token');
-        return token === null ? '' : token;
+        this.tokenSave.saveToken(token);
     }
 
 }
