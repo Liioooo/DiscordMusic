@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit {
   public joinError: string;
   public showingJoinError = false;
   private showJoinErrorTimer: Observable<number>;
-  private showJoinErrorTimerSubscription: Subscription;
 
   constructor(private discordService: DiscordService, public audioService: AudioService) { }
 
@@ -30,15 +29,12 @@ export class HomeComponent implements OnInit {
           this.joinError = 'Unable to join!';
           this.showingJoinError = true;
           this.showJoinErrorTimer = timer(6000);
-          this.showJoinErrorTimerSubscription = this.showJoinErrorTimer.subscribe(() => this.showingJoinError = false);
+          this.showJoinErrorTimer.subscribe(() => this.showingJoinError = false);
         });
   }
 
   public leaveChannel() {
       this.discordService.leaveChannel();
-      if (this.showJoinErrorTimerSubscription) {
-          this.showJoinErrorTimerSubscription.unsubscribe();
-      }
   }
 
 }
