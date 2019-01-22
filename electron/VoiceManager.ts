@@ -26,7 +26,7 @@ export class VoiceManager {
 
     public playFile(path: string) {
         console.log('play', path);
-        this.voiceDispatcher = this.connection.play(path);
+        this.voiceDispatcher = this.connection.play(path, {volume: 0.4});
         this.appendEndEvent();
     }
 

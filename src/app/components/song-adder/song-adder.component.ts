@@ -41,12 +41,15 @@ export class SongAdderComponent implements OnInit {
   }
 
   public fileInInputChanged(event: any) {
-      const file: File = event.target.files[0];
-      if (!file) { return; }
-      this.audioService.addSongFile({
-          type: 'file',
-          path: file.path
-      });
+      const files: FileList = event.target.files;
+
+      if (files.length === 0) { return; }
+      for (let i = 0; i < files.length; i++) {
+          this.audioService.addSongFile({
+              type: 'file',
+              path: files[i].path
+          });
+      }
   }
 
 }
