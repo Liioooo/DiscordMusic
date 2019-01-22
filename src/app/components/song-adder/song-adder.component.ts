@@ -6,15 +6,12 @@ import {AudioService} from '../../services/audio/audio.service';
   templateUrl: './song-adder.component.html',
   styleUrls: ['./song-adder.component.scss']
 })
-export class SongAdderComponent implements OnInit {
+export class SongAdderComponent {
 
   public youtubeLink = '';
   public youtubeLinkError = false;
 
   constructor(private audioService: AudioService) { }
-
-  ngOnInit() {
-  }
 
   public youtubeLinkHasValue(): boolean {
     return this.youtubeLink !== '';

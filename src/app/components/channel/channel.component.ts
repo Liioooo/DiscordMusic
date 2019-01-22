@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Channel, Snowflake} from 'discord.js';
 import {DiscordService} from '../../services/discord/discord.service';
 

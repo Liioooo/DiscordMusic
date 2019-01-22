@@ -1,21 +1,25 @@
-import {ApplicationRef, Injectable} from '@angular/core';
+import {ApplicationRef, Injectable, OnDestroy} from '@angular/core';
 import {Song} from '../../models/Song';
 import {getBasicInfo, validateURL, videoInfo} from 'ytdl-core';
 import {IpcService} from '../ipc/ipc.service';
 import {DiscordService} from '../discord/discord.service';
+import {Subscription} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AudioService {
+export class AudioService implements OnDestroy {
 
   private _songQueue = <Song[]>[];
   private _currentQueuePos = 0;
   private _playState = false;
   private _startedPlayingCurrentSong = false;
 
+  private _songEndedSubscription: Subscription;
+  private _leftChannelSubscription: Subscription;
+
   constructor(private ipcService: IpcService, private discordService: DiscordService, private appRef: ApplicationRef) {
-      this.ipcService.songEnded.subscribe(() => {
+      this._songEndedSubscription = this.ipcService.songEnded.subscribe(() => {
           if (this._currentQueuePos < this._songQueue.length - 1) {
               this.next();
           } else {
@@ -24,10 +28,15 @@ export class AudioService {
           }
           appRef.tick();
       });
-      this.discordService.leftChannel.subscribe(() => {
+      this._leftChannelSubscription = this.discordService.leftChannel.subscribe(() => {
           this._playState = false;
           this._startedPlayingCurrentSong = false;
       });
+  }
+
+  ngOnDestroy(): void {
+      this._leftChannelSubscription.unsubscribe();
+      this._songEndedSubscription.unsubscribe();
   }
 
   public get songQueue(): Song[] {
