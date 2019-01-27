@@ -3,7 +3,7 @@
 .appFrameBar {
   background-color: $gray-800;
   display: grid;
-  grid-template-columns: auto 30px 30px;
+  grid-template-columns: auto 30px 30px 30px;
   user-select: none;
   height: 34px;
 
@@ -11,7 +11,7 @@
     -webkit-app-region: drag;
   }
 
-  i:first-of-type {
+  .hoverEffect {
     &:hover {
       background-color: $gray-700;
       cursor: pointer;

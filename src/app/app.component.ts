@@ -14,6 +14,14 @@ export class AppComponent {
       this.electronService.remote.getCurrentWindow().minimize();
   }
 
+  maximizeWin() {
+      if (this.electronService.remote.getCurrentWindow().isMaximized()) {
+        this.electronService.remote.getCurrentWindow().unmaximize();
+      } else {
+          this.electronService.remote.getCurrentWindow().maximize();
+      }
+  }
+
   close() {
       this.electronService.remote.getCurrentWindow().close();
   }

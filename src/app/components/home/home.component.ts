@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DiscordService} from '../../services/discord/discord.service';
 import { VoiceChannel} from 'discord.js';
-import {from, Observable, Subscription, timer} from 'rxjs';
+import {from, Observable, timer} from 'rxjs';
 import {AudioService} from '../../services/audio/audio.service';
 
 @Component({
