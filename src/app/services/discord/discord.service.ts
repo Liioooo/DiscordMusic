@@ -15,7 +15,6 @@ export class DiscordService {
 
     public login(token: string): Promise<string> {
         this.ipcService.botMoved.subscribe((newChannel: Snowflake) => {
-            console.log('kaslska');
             this.currentChannel = newChannel;
             this.appRef.tick();
         });
