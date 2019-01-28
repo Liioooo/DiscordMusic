@@ -6,12 +6,14 @@ export class VoiceManager {
 
     private connection: VoiceConnection;
     private voiceDispatcher: StreamDispatcher;
+    private currentVolume = 0.25;
 
     constructor(private webContents: WebContents) {
         ipcMain.on('playYT', (event, data) => this.playYouTube(data['path']));
         ipcMain.on('playFile', (event, data) => this.playFile(data['path']));
         ipcMain.on('resume', () => this.resume());
         ipcMain.on('pause', () => this.pause());
+        ipcMain.on('setVolume', (event, data) => this.setVolume(data['volume']));
     }
 
     public set voiceConnection(vc: VoiceConnection) {
@@ -26,7 +28,7 @@ export class VoiceManager {
 
     public playFile(path: string) {
         console.log('play', path);
-        this.voiceDispatcher = this.connection.play(path, {volume: 0.25});
+        this.voiceDispatcher = this.connection.play(path, {volume: this.currentVolume});
         this.appendEndEvent();
     }
 
@@ -49,6 +51,13 @@ export class VoiceManager {
     public resume() {
         if (!this.isPlaying) {
             this.voiceDispatcher.resume();
+        }
+    }
+
+    public setVolume(volume: number) {
+        this.currentVolume = volume;
+        if (this.voiceDispatcher) {
+            this.voiceDispatcher.setVolume(volume);
         }
     }
 

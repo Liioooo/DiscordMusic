@@ -8,6 +8,7 @@ import {AudioService} from '../../services/audio/audio.service';
 })
 export class PlayerComponent implements OnInit {
 
+  public volumeValue: number;
 
   constructor(public audioService: AudioService) { }
 
@@ -24,6 +25,10 @@ export class PlayerComponent implements OnInit {
 
   public playPause() {
     this.audioService.playPause();
+  }
+
+  public volumeChanged() {
+    this.audioService.setVolume(this.volumeValue);
   }
 
 }

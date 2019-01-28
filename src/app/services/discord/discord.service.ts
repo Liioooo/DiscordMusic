@@ -1,8 +1,6 @@
 import {ApplicationRef, Injectable} from '@angular/core';
 import {Snowflake, VoiceChannel} from 'discord.js';
 import {IpcService} from '../ipc/ipc.service';
-import {Router} from '@angular/router';
-import {AudioService} from '../audio/audio.service';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable({
@@ -17,6 +15,7 @@ export class DiscordService {
 
     public login(token: string): Promise<string> {
         this.ipcService.botMoved.subscribe((newChannel: Snowflake) => {
+            console.log('kaslska');
             this.currentChannel = newChannel;
             this.appRef.tick();
         });

@@ -7,7 +7,7 @@ div {
   .buttons {
     width: 320px;
 
-    @include mediaQuery(800px, max) {
+    @include mediaQuery(950px, max) {
       width: 100%;
     }
 
@@ -19,6 +19,38 @@ div {
         cursor: pointer;
         color: $gray-600;
       }
+    }
+  }
+
+  .volume {
+    width: 158px;
+
+    @include mediaQuery(800px, max) {
+      width: 100%;
+    }
+
+    input {
+      width: 100%;
+      height: 5px;
+      max-width: 125px;
+      -webkit-appearance: none;
+      outline: none;
+      background: $gray-100;
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 7.5px;
+        background: $gray-500;
+        cursor: pointer;
+
+        &:active, &:hover {
+          background: $gray-600;
+        }
+      }
+
     }
   }
 }

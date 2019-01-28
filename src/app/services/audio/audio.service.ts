@@ -55,6 +55,10 @@ export class AudioService implements OnDestroy {
     return validateURL(url);
   }
 
+  public setVolume(volume: number) {
+      this.ipcService.sendIPC('setVolume', {volume});
+  }
+
   public moveUp(id: number) {
       const oldUpper = this._songQueue[id - 1];
       this._songQueue[id - 1] = this._songQueue[id];
