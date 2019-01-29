@@ -4,6 +4,11 @@
 div {
   background-color: $gray-800;
 
+  .song-title {
+    overflow: hidden;
+    max-height: 60px;
+  }
+
   .buttons {
     width: 215px;
 
