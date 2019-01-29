@@ -5,7 +5,7 @@ div {
   background-color: $gray-800;
 
   .buttons {
-    width: 320px;
+    width: 215px;
 
     @include mediaQuery(950px, max) {
       width: 100%;

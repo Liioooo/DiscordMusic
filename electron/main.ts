@@ -12,7 +12,7 @@ function createWindow() {
       width: 800,
       height: 600,
       minHeight: 440,
-      minWidth: 600,
+      minWidth: 840,
       frame: false
   });
 
