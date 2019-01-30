@@ -20,7 +20,7 @@ export class PlayerComponent implements OnInit {
   }
 
   public next() {
-      this.audioService.next();
+      this.audioService.next(true);
   }
 
   public playPause() {

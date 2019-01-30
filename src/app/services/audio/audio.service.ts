@@ -21,7 +21,7 @@ export class AudioService implements OnDestroy {
   constructor(private ipcService: IpcService, private discordService: DiscordService, private appRef: ApplicationRef) {
       this._songEndedSubscription = this.ipcService.songEnded.subscribe(() => {
           if (this._currentQueuePos < this._songQueue.length - 1) {
-              this.next();
+              this.next(false);
           } else {
               this._playState = false;
               this._startedPlayingCurrentSong = false;
@@ -86,7 +86,8 @@ export class AudioService implements OnDestroy {
       }
   }
 
-  public next() {
+  // true=click, false=songEnded
+  public next(source: boolean) {
       if (this._currentQueuePos < this._songQueue.length - 1) {
           this._currentQueuePos++;
           this._startedPlayingCurrentSong = false;
@@ -94,7 +95,7 @@ export class AudioService implements OnDestroy {
               this._startedPlayingCurrentSong = true;
               this.playSong(this._songQueue[this.currentQueuePos]);
           }
-      } else {
+      } else if (!source) {
           this._playState = false;
       }
   }
